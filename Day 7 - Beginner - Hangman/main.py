@@ -7,31 +7,46 @@ random_word = random.choice(word_list)
 lives = 7
 end_of_game = False
 guessed = ["_" for _ in range(len(random_word))]
+guessed_letters = set()
+
 print(logo)
+
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 while not end_of_game:
     guess = input("Guess a letter: ").lower()
-    os.system('cls' if os.name == 'nt' else 'clear')
+    clear_screen()
 
-    if guess in guessed:
+    if len(guess) != 1 or not guess.isalpha():
+        print("Please enter a single alphabetic character.")
+        continue
+
+    if guess in guessed_letters:
         print(f"You've already guessed {guess}")
-    elif guess in random_word:
-        guessed[random_word.index(guess)] = guess
-
-        if "_" not in guessed:
-            print("You win.")
-            end_of_game = True
     else:
-        print(f"You guessed {guess}, that's not in the word. You lose a life.")
-        lives -= 1
+        guessed_letters.add(guess)
+        if guess in random_word:
+            for idx, letter in enumerate(random_word):
+                if letter == guess:
+                    guessed[idx] = guess
 
-        if lives == 0:
-            print("You lose.")
-            end_of_game = True
+            if "_" not in guessed:
+                print("You win.")
+                end_of_game = True
+        else:
+            print(f"You guessed {guess}, that's not in the word. You lose a life.")
+            lives -= 1
+
+            if lives == 0:
+                print("You lose.")
+                end_of_game = True
 
     print("".join(guessed))
 
     if lives != 7:
         print(stages[lives])
 
-print(random_word)
+print(f"The word was: {random_word}")
