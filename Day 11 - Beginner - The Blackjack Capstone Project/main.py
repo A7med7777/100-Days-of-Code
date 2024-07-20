@@ -53,6 +53,7 @@ while play:
             else:
                 if user_score > 21 and 11 in user:
                     user[user.index(11)] = 1
+                    user_score = sum(user)
                 if user_score > 21:
                     print("You went over. You lose 😭")
                     hit = False
