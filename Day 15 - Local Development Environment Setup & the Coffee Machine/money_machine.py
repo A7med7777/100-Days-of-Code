@@ -26,7 +26,11 @@ class MoneyMachine:
 
     def make_payment(self, cost):
         """Returns True when payment is accepted, or False if insufficient."""
-        self.process_coins()
+        try:
+            self.process_coins()
+        except ValueError as ve:
+            print(ve)
+
         if self.money_received >= cost:
             change = round(self.money_received - cost, 2)
             print(f"Here is {self.CURRENCY}{change} in change.")
