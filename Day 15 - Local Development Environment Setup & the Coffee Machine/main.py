@@ -101,5 +101,5 @@ while system_on:
             if resources_sufficient(prompt):
                 if transaction_successful(prompt):
                     make_coffee(prompt)
-        except ValueError as ve:
-            print(ve)
+        except ValueError:
+            print("Invalid input. Please enter integers only.")
