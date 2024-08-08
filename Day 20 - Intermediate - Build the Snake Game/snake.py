@@ -16,6 +16,12 @@ class Snake:
             tim.setpos(position)
             self.body.append(tim)
 
+    def grow(self):
+        tim = Turtle(shape="square")
+        tim.pen(pendown=False, pencolor="white", fillcolor="white")
+        tim.setpos(self.body[-1].pos())
+        self.body.append(tim)
+
     def move(self):
         for segment in range(len(self.body) - 1, 0, -1):
             self.body[segment].goto(self.body[segment-1].pos())
