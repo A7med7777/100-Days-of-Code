@@ -11,6 +11,6 @@ class Food(Turtle):
         self.random_location()
 
     def random_location(self):
-        x = random.randint(-300, 300)
-        y = random.randint(-250, 250)
+        x = random.randint(-300, b=300)
+        y = random.randint(-250, b=250)
         self.setpos(x, y)
