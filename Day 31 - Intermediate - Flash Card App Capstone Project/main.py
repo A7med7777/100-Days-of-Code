@@ -1,5 +1,6 @@
 from tkinter import *
 import pandas
+import random
 import os
 
 BACKGROUND_COLOR = "#B1DDC6"
@@ -35,22 +36,21 @@ def flip_card():
 
 def right_checked():
     global count
-    if french_words_list:
+    if count < len(french_words_list) - 1:
         french_words_list.pop(count)
-    next_card()
+        next_card()
 
 
 def wrong_checked():
     global count
     count += 1
-
     if count >= len(french_words_list):
         count = 0
-
     next_card()
 
 
 french_words_list = get_words()
+random.shuffle(french_words_list)
 
 window = Tk()
 window.config(bg=BACKGROUND_COLOR, padx=30, pady=30)
