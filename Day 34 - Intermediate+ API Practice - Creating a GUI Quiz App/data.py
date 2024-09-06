@@ -2,6 +2,7 @@ import requests
 
 params = {
     "amount": 30,
+    "category": 18,
     "type": "boolean"
 }
 
@@ -42,7 +43,8 @@ question_data = requests.get("https://opentdb.com/api.php", params=params).json(
 #         "category": "Science: Computers",
 #         "type": "boolean",
 #         "difficulty": "medium",
-#         "question": "All program codes have to be compiled into an executable file in order to be run. This file can then be executed on any machine.",
+#         "question": "All program codes have to be compiled into an executable file in order to be run. This file can "
+#                     "then be executed on any machine.",
 #         "correct_answer": "False",
 #         "incorrect_answers": [
 #             "True"
