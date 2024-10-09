@@ -1,5 +1,9 @@
 from twilio.rest import Client
+import smtplib
 import os
+
+MY_EMAIL = os.getenv("EMAIL")
+MY_PASS = os.getenv("PASS")
 
 
 class NotificationManager:
@@ -19,3 +23,19 @@ class NotificationManager:
         )
 
         print(message.sid)
+
+    def send_email(self, to_email, flight, city):
+        try:
+            with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+                connection.starttls()
+                connection.login(user=MY_EMAIL, password=MY_PASS)
+                connection.sendmail(
+                    from_addr=MY_EMAIL,
+                    to_addrs=to_email,
+                    msg=f"Subject:New Low Price Flight to {city}!\n\n"
+                        f"Lowest price to {flight.destination} is £{flight.price}".encode('utf-8')
+                )
+
+            print("Email sent!")
+        except Exception as e:
+            print(f"Error sending email: {e}")

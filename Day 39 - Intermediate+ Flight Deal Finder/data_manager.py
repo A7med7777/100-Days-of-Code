@@ -6,6 +6,7 @@ import os
 class DataManager:
     def __init__(self):
         self.url = os.getenv("URL")
+        self.users = os.getenv("USERS")
         self.username = os.getenv("USER")
         self.password = os.getenv("PASSWORD")
         self.basic_auth = HTTPBasicAuth(username=self.username, password=self.password)
@@ -72,6 +73,15 @@ class DataManager:
     def retrieve_rows(self):
         try:
             response = requests.get(self.url, auth=self.basic_auth)
+            response.raise_for_status()
+
+            return response.json()
+        except requests.exceptions.RequestException as re:
+            return {}
+
+    def git_emails(self):
+        try:
+            response = requests.get(url=self.users, auth=self.basic_auth)
             response.raise_for_status()
 
             return response.json()

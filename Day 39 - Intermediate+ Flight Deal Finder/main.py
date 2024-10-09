@@ -11,6 +11,7 @@ flight_search = FlightSearch()
 notification_manager = NotificationManager()
 
 rows = data_manager.retrieve_rows()["prices"]
+emails = data_manager.git_emails()["users"]
 
 for row in rows:
     iata = flight_search.city_search(row["city"])
@@ -24,6 +25,11 @@ for row in rows:
     six_month_from_today = dt.datetime.now() + dt.timedelta(days=(6 * 30))
     flights = flight_search.flight_offers_search(ORIGIN_CITY_CODE, destination, tomorrow, six_month_from_today)
     cheapest_flight = lowest_price(flights)
+
+    for email in emails:
+        if cheapest_flight.price != "N/A":
+            notification_manager.send_email(email["whatIsYourEmail?"], cheapest_flight, row["city"])
+
     if cheapest_flight.price != "N/A" and cheapest_flight.price < float(row["lowestPrice"]):
         print(f"Lower price flight found to {row['city']}!")
         notification_manager.send_message(cheapest_flight)
