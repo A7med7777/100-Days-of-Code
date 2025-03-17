@@ -5,20 +5,26 @@ from post import Post
 
 app = Flask(__name__)
 
-posts = []
 
-
-@app.route('/')
-def home():
-    global posts
+def get_json():
     url = "https://api.npoint.io/c790b4d5cab58020d391"
     response = requests.get(url)
+    posts = []
 
     for post in response.json():
         new_post = Post(post)
         posts.append(new_post)
 
-    return render_template(template_name_or_list="index.html", posts=posts)
+    return posts
+
+
+posts = get_json()
+
+
+@app.route('/')
+def home():
+    all_posts = get_json()
+    return render_template(template_name_or_list="index.html", posts=all_posts)
 
 
 @app.route("/post/<int:post_id>")
@@ -28,7 +34,8 @@ def get_post(post_id):
     for post in posts:
         if post.id == post_id:
             required_post = post
-            
+            break
+
     return render_template(template_name_or_list="post.html", post=required_post)
 
 

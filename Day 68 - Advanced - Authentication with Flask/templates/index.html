@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="box">
+  <h1>Flask Authentication</h1>
+  <!-- TODO: Hide the Login/Registration buttons for logged-in users -->
+  {% if current_user.is_authenticated %}
+  <h2 style="text-align: center">Hi {{ current_user.name }}!</h2>
+  {% with errors = get_flashed_messages(category_filter=["error"]) %}
+  {% if errors %}
+  <div class="alert-message block-message error">
+    <a class="close" href="{{ url_for('home') }}">×</a>
+    <ul style="list-style-type: none; padding-left: 0px">
+      {%- for msg in errors %}
+      <li>
+        <p>{{ msg }}</p>
+      </li>
+      {% endfor -%}
+    </ul>
+  </div>
+  {% endif %}
+  {% endwith %}
+  {% else %}
+  <a href="{{ url_for('login') }}" class="btn btn-primary btn-block btn-large"
+    >Login</a
+  >
+  <a
+    href="{{ url_for('register') }}"
+    class="btn btn-secondary btn-block btn-large"
+    >Register</a
+  >
+  {% endif %}
+</div>
+{% endblock %}

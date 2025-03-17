@@ -1,0 +1,28 @@
+{% from 'bootstrap5/form.html' import render_field %}
+
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Login</h1>
+
+  <form method="POST" action="{{ url_for('login') }}" novalidate>
+    {{ form.csrf_token() }}
+    {{ render_field(form.email, form_group_classes='myClass mb-3 col-5') }}
+    {{ render_field(form.password, form_group_classes='myClass mb-3 col-5', placeholder='Your Password') }}
+    {{ render_field(form.submit) }}
+  </form>
+
+  <!-- {% if form.errors %}
+  <ul class="errors">
+    {% for field_name, field_errors in form.errors|dictsort if field_errors%}
+    {% for error in field_errors %}
+    <li>{{ form[field_name].label }}: {{ error }}</li>
+    {% endfor %}
+    {% endfor %}
+  </ul>
+  {% endif %} -->
+</div>
+{% endblock %}
